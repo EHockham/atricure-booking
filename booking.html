@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book a Training Session</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .booking-wrapper {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+        .card {
+            border-radius: 12px;
+        }
+        .card-header {
+            border-radius: 12px 12px 0 0;
+        }
+        .error-text {
+            display: none;
+        }
+        .error-text.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="booking-wrapper">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Book a Training Session</h4>
+        </div>
+        <div class="card-body">
+
+            <form id="booking-form">
+                <!-- Hospital Info -->
+                <div class="mb-3">
+                    <label class="form-label" for="hospital">Hospital</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="hospital"
+                        name="hospital"
+                        list="hospital-list"
+                        placeholder="Start typing to search..."
+                        required
+                        autocomplete="off"
+                    >
+                    <datalist id="hospital-list">
+                        <option value="St Bartholomew’s Hospital"></option>
+                        <option value="Basildon University Hospital"></option>
+                        <option value="Birmingham Children's Hospital"></option>
+                        <option value="Bristol Royal Infirmary"></option>
+                        <option value="Royal Brompton Hospital"></option>
+                        <option value="Bupa Cromwell Hospital"></option>
+                        <option value="Cleveland Clinic London Ltd"></option>
+                        <option value="Derriford Hospital"></option>
+                        <option value="Great Ormond Street Hospital for Children"></option>
+                        <option value="Hammersmith Hospital"></option>
+                        <option value="Harefield Hospital"></option>
+                        <option value="Harley Street Clinic"></option>
+                        <option value="King's College Hospital"></option>
+                        <option value="London Bridge Hospital"></option>
+                        <option value="Nuffield Health at St. Bartholomew's Hospital"></option>
+                        <option value="Queen Elizabeth Hospital"></option>
+                        <option value="Royal Sussex County Hospital"></option>
+                        <option value="Spire Bristol Hospital"></option>
+                        <option value="Spire Southampton Hospital"></option>
+                        <option value="Spire St. Anthony's Hospital"></option>
+                        <option value="St George's Hospital"></option>
+                        <option value="St Thomas' Hospital"></option>
+                        <option value="The Harborne Hospital"></option>
+                        <option value="The Priory Hospital"></option>
+                        <option value="The Wellington Hospital"></option>
+                        <option value="University Hospital Southampton"></option>
+                    </datalist>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label" for="contact_name">Your Name</label>
+                        <input type="text" class="form-control" id="contact_name" name="contact_name" required>
+                    </div>
+
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label" for="contact_role">Your Role</label>
+                        <input type="text" class="form-control" id="contact_role" name="contact_role" required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="contact_email">Email Address</label>
+                    <input
+                        type="email"
+                        class="form-control"
+                        id="contact_email"
+                        name="contact_email"
+                        required
+                        pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
+                    >
+                    <div id="email-error" class="text-danger small error-text">
+                        Invalid email address. Please check and try again.
+                    </div>
+                </div>
+
+                <!-- Session Info -->
+                <div class="mb-3">
+                    <label class="form-label" for="session_type">Session Type</label>
+                    <select class="form-select" id="session_type" name="session_type" required>
+                        <option value="" disabled selected>Choose a session type...</option>
+                        <option value="acm_troubleshoot">ACM troubleshoot</option>
+                        <option value="asu_asb_troubleshoot">ASU/ASB troubleshoot</option>
+                        <option value="acm_asu_asb_troubleshoot">ACM/ASU/ASB troubleshoot</option>
+                        <option value="af_ablation_why_treat">AF Ablation "Why Treat?"</option>
+                        <option value="hybrid_convergent_ablation">Hybrid/Convergent Ablation</option>
+                        <option value="custom">Custom (please specify in comments)</option>
+                    </select>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label" for="date">Preferred Date</label>
+                        <input type="date" class="form-control" id="date" name="date" required>
+                    </div>
+
+                    <div class="mb-3 col-md-3">
+                        <label class="form-label" for="start_time">Start Time</label>
+                        <select class="form-select" id="start_time" name="start_time" required>
+                            <!-- Times 07:00 to 17:00 in 30-minute increments -->
+                            <option value="" disabled selected>Select...</option>
+                            <option value="07:00">07:00</option>
+                            <option value="07:30">07:30</option>
+                            <option value="08:00">08:00</option>
+                            <option value="08:30">08:30</option>
+                            <option value="09:00">09:00</option>
+                            <option value="09:30">09:30</option>
+                            <option value="10:00">10:00</option>
+                            <option value="10:30">10:30</option>
+                            <option value="11:00">11:00</option>
+                            <option value="11:30">11:30</option>
+                            <option value="12:00">12:00</option>
+                            <option value="12:30">12:30</option>
+                            <option value="13:00">13:00</option>
+                            <option value="13:30">13:30</option>
+                            <option value="14:00">14:00</option>
+                            <option value="14:30">14:30</option>
+                            <option value="15:00">15:00</option>
+                            <option value="15:30">15:30</option>
+                            <option value="16:00">16:00</option>
+                            <option value="16:30">16:30</option>
+                            <option value="17:00">17:00</option>
+                        </select>
+                        <div id="time-warning" class="text-danger small error-text">
+                            No valid duration fits within working hours (07:00–18:00). Please choose an earlier start time.
+                        </div>
+                    </div>
+
+                    <div class="mb-3 col-md-3">
+                        <label class="form-label" for="duration">Duration</label>
+                        <select class="form-select" id="duration" name="duration" required>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                        <div class="form-text">
+                            In 1-hour increments (minimum 1 hour, within 07:00–18:00).
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comments -->
+                <div class="mb-3">
+                    <label class="form-label" for="comments">Comments / Requirements</label>
+                    <textarea class="form-control" id="comments" name="comments" rows="4"
+                              placeholder="Any specific needs, number of attendees, equipment, etc."></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary" id="submit-btn">
+                        Submit Request
+                    </button>
+                </div>
+
+                <p class="mt-3 text-muted small">
+                    Our team will contact you to confirm your session or suggest an alternative time.
+                </p>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    const emailInput = document.getElementById('contact_email');
+    const emailError = document.getElementById('email-error');
+    const startTimeSelect = document.getElementById('start_time');
+    const durationSelect = document.getElementById('duration');
+    const timeWarning = document.getElementById('time-warning');
+    const submitBtn = document.getElementById('submit-btn');
+
+    function validateEmail() {
+        if (!emailInput.value) {
+            emailError.classList.remove('active');
+            return;
+        }
+        if (emailInput.checkValidity()) {
+            emailError.classList.remove('active');
+        } else {
+            emailError.classList.add('active');
+        }
+    }
+
+    emailInput.addEventListener('input', validateEmail);
+
+    function parseTimeToHours(timeStr) {
+        const [h, m] = timeStr.split(':').map(Number);
+        return h + (m / 60);
+    }
+
+    function updateDurationOptions() {
+        durationSelect.innerHTML = '';
+        timeWarning.classList.remove('active');
+        submitBtn.disabled = false;
+
+        const value = startTimeSelect.value;
+        if (!value) {
+            return;
+        }
+
+        const startHours = parseTimeToHours(value);
+        const endOfDay = 18; // 18:00
+        const hoursAvailable = endOfDay - startHours;
+
+        // Minimum 1 hour session
+        let maxFullHours = Math.floor(hoursAvailable);
+
+        if (maxFullHours < 1) {
+            // No valid duration fits
+            timeWarning.classList.add('active');
+            submitBtn.disabled = true;
+            return;
+        }
+
+        // Populate duration options from 1 hour up to maxFullHours
+        for (let i = 1; i <= maxFullHours; i++) {
+            const option = document.createElement('option');
+            option.value = String(i * 60); // minutes
+            option.textContent = `${i} hour${i > 1 ? 's' : ''}`;
+            durationSelect.appendChild(option);
+        }
+    }
+
+    startTimeSelect.addEventListener('change', updateDurationOptions);
+
+    // Initialize duration options on load if a start time is pre-selected
+    document.addEventListener('DOMContentLoaded', function () {
+        updateDurationOptions();
+    });
+
+    // Final safety check on submit: ensure email valid & time fits
+    document.getElementById('booking-form').addEventListener('submit', function (e) {
+        validateEmail();
+        if (!emailInput.checkValidity()) {
+            e.preventDefault();
+        }
+
+        const startVal = startTimeSelect.value;
+        const durationVal = durationSelect.value;
+        if (startVal && durationVal) {
+            const startHours = parseTimeToHours(startVal);
+            const durationHours = Number(durationVal) / 60;
+            const endHours = startHours + durationHours;
+            if (endHours > 18 || startHours < 7) {
+                e.preventDefault();
+                timeWarning.classList.add('active');
+                submitBtn.disabled = false; // let them change
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
