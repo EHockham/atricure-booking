@@ -205,157 +205,157 @@
 <script>
     (function () {
         emailjs.init({
-            publicKey: '4Ip-saeySQR29uvra',
+            publicKey: '4Ip-saeySQR29uvra'
         });
     })();
 </script>
 
 <script>
-    const emailInput = document.getElementById('contact_email');
-    const emailError = document.getElementById('email-error');
-    const startTimeSelect = document.getElementById('start_time');
-    const durationSelect = document.getElementById('duration');
-    const timeWarning = document.getElementById('time-warning');
-    const submitBtn = document.getElementById('submit-btn');
-    const form = document.getElementById('booking-form');
-    const sessionTypeSelect = document.getElementById('session_type');
-
-    function validateEmail() {
-        if (!emailInput.value) {
-            emailError.classList.remove('active');
-            return;
-        }
-        if (emailInput.checkValidity()) {
-            emailError.classList.remove('active');
-        } else {
-            emailError.classList.add('active');
-        }
-    }
-
-    emailInput.addEventListener('input', validateEmail);
-
-    function parseTimeToHours(timeStr) {
-        const [h, m] = timeStr.split(':').map(Number);
-        return h + (m / 60);
-    }
-
-    function updateDurationOptions() {
-        durationSelect.innerHTML = '';
-        timeWarning.classList.remove('active');
-        submitBtn.disabled = false;
-
-        const value = startTimeSelect.value;
-        if (!value) {
-            return;
-        }
-
-        const startHours = parseTimeToHours(value);
-        const endOfDay = 18; // 18:00
-        const hoursAvailable = endOfDay - startHours;
-
-        // Minimum 1 hour session
-        let maxFullHours = Math.floor(hoursAvailable);
-
-        if (maxFullHours < 1) {
-            // No valid duration fits
-            timeWarning.classList.add('active');
-            submitBtn.disabled = true;
-            return;
-        }
-
-        // Populate duration options from 1 hour up to maxFullHours
-        for (let i = 1; i <= maxFullHours; i++) {
-            const option = document.createElement('option');
-            option.value = String(i * 60); // minutes
-            option.textContent = `${i} hour${i > 1 ? 's' : ''}`;
-            durationSelect.appendChild(option);
-        }
-    }
-
-    startTimeSelect.addEventListener('change', updateDurationOptions);
-
-    // Initialize duration options on load if a start time is pre-selected
     document.addEventListener('DOMContentLoaded', function () {
-        updateDurationOptions();
-    });
+        const emailInput = document.getElementById('contact_email');
+        const emailError = document.getElementById('email-error');
+        const startTimeSelect = document.getElementById('start_time');
+        const durationSelect = document.getElementById('duration');
+        const timeWarning = document.getElementById('time-warning');
+        const submitBtn = document.getElementById('submit-btn');
+        const form = document.getElementById('booking-form');
+        const sessionTypeSelect = document.getElementById('session_type');
 
-    // Handle form submit: validate, then send via EmailJS
-    form.addEventListener('submit', function (e) {
-        e.preventDefault(); // always prevent default submit
-
-        // Validate email
-        validateEmail();
-        if (!emailInput.checkValidity()) {
-            return;
-        }
-
-        // Validate time within working hours
-        const startVal = startTimeSelect.value;
-        const durationVal = durationSelect.value;
-        if (startVal && durationVal) {
-            const startHours = parseTimeToHours(startVal);
-            const durationHours = Number(durationVal) / 60;
-            const endHours = startHours + durationHours;
-            if (endHours > 18 || startHours < 7) {
-                timeWarning.classList.add('active');
-                submitBtn.disabled = false; // let them change
-                return;
-            } else {
-                timeWarning.classList.remove('active');
-            }
-        } else {
-            return;
-        }
-
-        // Collect form values
-        const hospital = document.getElementById('hospital').value;
-        const contactName = document.getElementById('contact_name').value;
-        const contactEmail = emailInput.value;
-        const date = document.getElementById('date').value;
-        const startTime = startVal;
-        const durationHours = Number(durationVal) / 60;
-        const comments = document.getElementById('comments').value;
-
-        // Get human-readable session label
-        const sessionLabel =
-            sessionTypeSelect.options[sessionTypeSelect.selectedIndex].text;
-
-        const templateParams = {
-            hospital: hospital,
-            contact_name: contactName,
-            session_label: sessionLabel,
-            date: date,
-            start_time: startTime,
-            duration_hours: durationHours,
-            contact_email: contactEmail,
-            comments: comments
-        };
-
-        // Disable button & show sending state
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Sending...';
-
-        // Send admin email, then user confirmation
-        emailjs
-            .send('service_1oj5hwj', 'template_ayy6ad9', templateParams)
-            .then(function () {
-                return emailjs.send('service_1oj5hwj', 'template_nvxa2ps', templateParams);
-            })
-            .then(function () {
-                alert('Thank you. Your booking request has been sent.');
-                form.reset();
-                updateDurationOptions();
+        function validateEmail() {
+            if (!emailInput.value) {
                 emailError.classList.remove('active');
-                timeWarning.classList.remove('active');
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Submit Request';
-            })
-            .catch(function (error) {
-                console.error('EmailJS error:', error);
-                alert('Sorry, there was a problem sending your request. Please try again.');
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Submit Request';
-            });
+                return;
+            }
+            if (emailInput.checkValidity()) {
+                emailError.classList.remove('active');
+            } else {
+                emailError.classList.add('active');
+            }
+        }
+
+        emailInput.addEventListener('input', validateEmail);
+
+        function parseTimeToHours(timeStr) {
+            const [h, m] = timeStr.split(':').map(Number);
+            return h + (m / 60);
+        }
+
+        function updateDurationOptions() {
+            durationSelect.innerHTML = '';
+            timeWarning.classList.remove('active');
+            submitBtn.disabled = false;
+
+            const value = startTimeSelect.value;
+            if (!value) {
+                return;
+            }
+
+            const startHours = parseTimeToHours(value);
+            const endOfDay = 18; // 18:00
+            const hoursAvailable = endOfDay - startHours;
+
+            // Minimum 1 hour session
+            let maxFullHours = Math.floor(hoursAvailable);
+
+            if (maxFullHours < 1) {
+                // No valid duration fits
+                timeWarning.classList.add('active');
+                submitBtn.disabled = true;
+                return;
+            }
+
+            // Populate duration options from 1 hour up to maxFullHours
+            for (let i = 1; i <= maxFullHours; i++) {
+                const option = document.createElement('option');
+                option.value = String(i * 60); // minutes
+                option.textContent = `${i} hour${i > 1 ? 's' : ''}`;
+                durationSelect.appendChild(option);
+            }
+        }
+
+        startTimeSelect.addEventListener('change', updateDurationOptions);
+
+        // Initialize duration options on load if a start time is pre-selected
+        updateDurationOptions();
+
+        // Handle form submit: validate, then send via EmailJS
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); // always prevent default submit
+
+            // Validate email
+            validateEmail();
+            if (!emailInput.checkValidity()) {
+                return;
+            }
+
+            // Validate time within working hours
+            const startVal = startTimeSelect.value;
+            const durationVal = durationSelect.value;
+            if (startVal && durationVal) {
+                const startHours = parseTimeToHours(startVal);
+                const durationHours = Number(durationVal) / 60;
+                const endHours = startHours + durationHours;
+                if (endHours > 18 || startHours < 7) {
+                    timeWarning.classList.add('active');
+                    submitBtn.disabled = false; // let them change
+                    return;
+                } else {
+                    timeWarning.classList.remove('active');
+                }
+            } else {
+                return;
+            }
+
+            // Collect form values
+            const hospital = document.getElementById('hospital').value;
+            const contactName = document.getElementById('contact_name').value;
+            const contactEmail = emailInput.value;
+            const date = document.getElementById('date').value;
+            const startTime = startVal;
+            const durationHours = Number(durationVal) / 60;
+            const comments = document.getElementById('comments').value;
+
+            // Get human-readable session label
+            const sessionLabel =
+                sessionTypeSelect.options[sessionTypeSelect.selectedIndex].text;
+
+            const templateParams = {
+                hospital: hospital,
+                contact_name: contactName,
+                session_label: sessionLabel,
+                date: date,
+                start_time: startTime,
+                duration_hours: durationHours,
+                contact_email: contactEmail,
+                comments: comments
+            };
+
+            // Disable button & show sending state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+
+            // Send admin email, then user confirmation
+            emailjs
+                .send('service_1oj5hwj', 'template_ayy6ad9', templateParams)
+                .then(function () {
+                    return emailjs.send('service_1oj5hwj', 'template_nvxa2ps', templateParams);
+                })
+                .then(function () {
+                    alert('Thank you. Your booking request has been sent.');
+                    form.reset();
+                    updateDurationOptions();
+                    emailError.classList.remove('active');
+                    timeWarning.classList.remove('active');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Request';
+                })
+                .catch(function (error) {
+                    console.error('EmailJS error:', error);
+                    alert('Sorry, there was a problem sending your request. Please try again.');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Request';
+                });
+        });
     });
 </script>
 
